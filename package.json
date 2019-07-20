@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./scripts/build.sh",
-    "test": "set -e; for x in doge bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash; do ./dist/$x/test.sh; done"
+    "test": "set -e; for x in groestl doge bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash; do ./dist/$x/test.sh; done"
   },
   "repository": {
     "type": "git",
