@@ -1,0 +1,40 @@
+<%
+  const daemonExtraArgsFmt = locals.daemonExtraArgs && ', ' + daemonExtraArgs.map(_ => `"${_}"`).join(', ');
+  const portsFmt = [rpcPort, locals.p2pPort, locals.testnetRpcPort, locals.testnetP2pPort].filter(Boolean).join(' ');
+  const binaryPrefix = locals.binaryPrefix || nodePrefix;
+  const nodeUrl = locals.nodeUrl ? locals.nodeUrl : `${nodeBaseUrl}$NODE_FILENAME`;
+  const useZip = nodeUrl.endsWith('.zip');
+-%>
+FROM ubuntu:18.04
+
+# System
+RUN apt-get update -qq \
+  && apt-get install -qq --no-install-recommends ca-certificates wget <%- useZip ? ' unzip' : '' %> \
+  && rm -rf /var/lib/apt/lists/*
+
+ARG NODE_VERSION
+ENV NODE_PREFIX=<%- nodePrefix %>
+ENV NODE_FILENAME <%- locals.nodeFilename || '$NODE_PREFIX-$NODE_VERSION-x86_64-linux-gnu.tar.gz' %>
+ENV NODE_URL <%- nodeUrl %>
+
+# Node
+<% if (name === 'peercoin') { -%>
+RUN set -ex \
+  && wget -qO $NODE_FILENAME $NODE_URL \
+  && unzip *.tar.gz -d $NODE_PREFIX-$NODE_VERSION \
+  && mv $NODE_PREFIX-*/bin/64/<%- binaryPrefix %>d /bin \
+  && rm -rf $NODE_PREFIX-* \
+  && which <%- binaryPrefix %>d
+<% } else { -%>
+RUN set -ex \
+  && wget -qO $NODE_FILENAME $NODE_URL \
+  && tar -xzf *.tar.gz --exclude=*-qt --exclude=*test* \
+  && mv $NODE_PREFIX-*/bin/* /bin \
+  && rm -rf $NODE_PREFIX-* \
+  && which <%- binaryPrefix %>d
+<% } -%>
+
+VOLUME /data
+EXPOSE <%- portsFmt -%>
+
+ENTRYPOINT ["/bin/<%- binaryPrefix %>d", "-datadir=/data", "--printtoconsole", "-rpcallowip=::/0"<%- daemonExtraArgsFmt %>]

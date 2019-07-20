@@ -1,0 +1,8 @@
+{
+  "name": "via",
+  "nodeVersion": "0.15.2",
+  "nodePrefix": "viacoin",
+  "nodeUrl": "https://github.com/viacoin/viacoin/releases/download/v$NODE_VERSION/viacoin-$NODE_VERSION-x86_64-linux-gnu.tar.gz",
+  "rpcPort": 38332,
+  "p2pPort": 5223
+}

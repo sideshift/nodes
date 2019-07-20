@@ -1,0 +1,25 @@
+{
+  "name": "sideshift-nodes",
+  "version": "1.0.0",
+  "description": "Docker images for full nodes",
+  "main": "index.js",
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "test": "set -e; for x in bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash; do ./dist/$x/test.sh; done"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sideshift/nodes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sideshift/nodes/issues"
+  },
+  "homepage": "https://github.com/sideshift/nodes#readme",
+  "devDependencies": {
+    "ejs": "2.6.2",
+    "ejs-cli": "2.0.1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "bitcoin",
+  "nodeVersion": "0.18.0",
+  "nodePrefix": "bitcoin",
+  "nodeUrl": "https://bitcoincore.org/bin/bitcoin-core-$NODE_VERSION/bitcoin-$NODE_VERSION-x86_64-linux-gnu.tar.gz",
+  "rpcPort": 8332,
+  "p2pPort": 8333,
+  "testnetRpcPort":  18332,
+  "testnetP2pPort": 18333
+}

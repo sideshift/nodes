@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+cd "$(dirname "$0")"; set -e
+
+export NODE_VERSION=<%- nodeVersion %>
+
+docker build \
+  --tag sideshift/nodes-<%- name %>-$NODE_VERSION \
+  --tag sideshift/nodes-<%- name %> \
+  --build-arg NODE_VERSION \
+  .

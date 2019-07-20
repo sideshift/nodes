@@ -1,0 +1,8 @@
+{
+  "name": "litecoin",
+  "nodeVersion": "0.17.1",
+  "nodePrefix": "litecoin",
+  "nodeUrl": "https://download.litecoin.org/litecoin-$NODE_VERSION/linux/litecoin-$NODE_VERSION-x86_64-linux-gnu.tar.gz",
+  "rpcPort": 9332,
+  "p2pPort": 9333
+}

@@ -1,0 +1,9 @@
+{
+  "name": "dash",
+  "nodeVersion": "0.14.0.2",
+  "nodePrefix": "dashcore",
+  "nodeUrl": "https://github.com/dashpay/dash/releases/download/v$NODE_VERSION/dashcore-$NODE_VERSION-x86_64-linux-gnu.tar.gz",
+  "rpcPort": 9998,
+  "p2pPort": 9999,
+  "binaryPrefix": "dash"
+}

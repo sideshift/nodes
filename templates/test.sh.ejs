@@ -1,0 +1,19 @@
+<%
+  const binaryPrefix = locals.binaryPrefix || nodePrefix
+  const cliFilename = locals.cliFilename || `${binaryPrefix}-cli`;
+  const healthRpcMethod = locals.healthRpcMethod || 'getblockchaininfo';
+-%>
+#!/usr/bin/env bash
+set -e; cd "$(dirname "$0")"
+
+node_name=sideshift-nodes-<%- name %>-test
+
+./build.sh
+docker stop $node_name || true
+docker run -d --rm --name $node_name sideshift/nodes-<%- name %> -rpcpassword=password
+
+until docker exec -ti $node_name <%- cliFilename %> -rpcpassword=password <%- healthRpcMethod %>; do
+  sleep 1
+done
+
+docker stop $node_name
