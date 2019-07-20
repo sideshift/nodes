@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-for name in bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash; do
+for name in doge bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash; do
   mkdir -p dist/$name
   ./scripts/compile-ejs.sh Dockerfile-bitcoin $name/settings > dist/$name/Dockerfile
   ./scripts/compile-ejs.sh build.sh $name/settings > dist/$name/build.sh
