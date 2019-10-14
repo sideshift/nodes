@@ -1,0 +1,31 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+  const dockerRunArgs = [
+    `-v /opt/ebs/${name}:/data`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+    ...(locals.zmqpubrawblockPort ? [`-p ${zmqpubrawblockPort}:${zmqpubrawblockPort}`] : []),
+    ...(locals.zmqpubrawtxPort ? [`-p ${zmqpubrawtxPort}:${zmqpubrawtxPort}`] : []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+<% if (name === 'liquid') { -%>
+Requires=bitcoin.service
+<% } -%>
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart=/usr/bin/docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %>
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

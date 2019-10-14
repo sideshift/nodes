@@ -1,0 +1,28 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+const dockerRunArgs = [
+    `-v /opt/ebs/${name}:/monero`,
+    `-e RPC_BIND_IP=0.0.0.0`,
+    `-e RPC_BIND_PORT=${rpcPort}`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart=/usr/bin/docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %> --data-dir /monero --non-interactive
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

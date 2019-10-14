@@ -1,0 +1,9 @@
+{
+  "name": "zcash",
+  "nodeVersion": "2.0.7-3",
+  "nodePrefix": "zcash",
+  "nodeUrl": "https://z.cash/downloads/zcash-$NODE_VERSION-linux64-debian-jessie.tar.gz",
+  "rpcPort": 8232,
+  "p2pPort": 8233,
+  "extraAptPackages": ["libgomp1"]
+}

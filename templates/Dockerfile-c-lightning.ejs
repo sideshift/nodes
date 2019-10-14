@@ -1,0 +1,5 @@
+<%
+  const portsFmt = [rpcPort, locals.p2pPort].filter(Boolean).join(' ');
+-%>
+
+FROM elementsproject/lightningd

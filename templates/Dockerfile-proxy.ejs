@@ -1,0 +1,5 @@
+FROM node:10.16-jessie
+
+RUN npm install add-basic-auth@1.1.2
+
+ENTRYPOINT ["/usr/local/bin/node", "./node_modules/.bin/add-basic-auth"]

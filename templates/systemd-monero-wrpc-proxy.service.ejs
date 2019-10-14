@@ -1,0 +1,28 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+  const dockerRunArgs = [
+    `-e PROXY_PASSWORD`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `--link monero-wrpc:monero-wrpc`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+Requires=monero-wrpc.service
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart= /bin/bash -c 'export PROXY_PASSWORD=`cat /opt/ebs/monero/proxy-password`; docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %> --target=http://monero-wrpc:28083 --username=user --password=$PROXY_PASSWORD --listenPort=<%- rpcPort %>'
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

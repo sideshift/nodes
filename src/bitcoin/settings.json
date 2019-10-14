@@ -6,5 +6,7 @@
   "rpcPort": 8332,
   "p2pPort": 8333,
   "testnetRpcPort":  18332,
-  "testnetP2pPort": 18333
+  "testnetP2pPort": 18333,
+  "zmqpubrawblockPort": 28332,
+  "zmqpubrawtxPort": 28333
 }

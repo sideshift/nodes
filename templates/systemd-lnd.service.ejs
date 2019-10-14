@@ -1,0 +1,29 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+  const dockerRunArgs = [
+    `-v /opt/ebs/${name}:/data`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `-p ${p2pPort}:${p2pPort}`,
+    `--link bitcoin:bitcoin`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+Requires=<%- backendService %>.service
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart=/usr/bin/docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %> --configfile=/data/lnd.conf --datadir=/data --tlskeypath=/data/tls.key --tlscertpath=/data/tls.cert
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

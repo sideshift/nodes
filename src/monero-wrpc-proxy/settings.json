@@ -1,0 +1,5 @@
+{
+  "name": "monero-wrpc-proxy",
+  "nodeVersion": "0.14.1.2",
+  "rpcPort": 18083
+}

@@ -1,10 +1,9 @@
 {
   "name": "peercoin",
-  "nodeVersion": "0.7.3",
+  "nodeVersion": "0.8.4",
   "nodePrefix": "peercoin",
-  "nodeUrl": "https://github.com/peercoin/peercoin/releases/download/v${NODE_VERSION}ppc/peercoin-v${NODE_VERSION}ppc-linux-gitian.zip",
-  "rpcPort": 9902,
+  "nodeUrl": "https://github.com/peercoin/peercoin/releases/download/v${NODE_VERSION}ppc/peercoin-${NODE_VERSION}-x86_64-linux-gnu.tar.gz",
   "p2pPort": 9901,
-  "cliFilename": "peercoind",
+  "rpcPort": 9902,
   "healthRpcMethod": "getinfo"
 }

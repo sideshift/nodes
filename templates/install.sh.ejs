@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e; cd "$(dirname "$0")"
+
+./build.sh
+
+sudo systemctl stop <%- name %> || true
+sudo systemctl disable <%- name %> || true
+sudo systemctl link ./<%- name %>.service
+sudo systemctl enable <%- name %>
+sudo systemctl start <%- name %>

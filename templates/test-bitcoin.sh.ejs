@@ -10,10 +10,17 @@ node_name=sideshift-nodes-<%- name %>-test
 
 ./build.sh
 docker stop $node_name || true
-docker run -d --rm --name $node_name sideshift/nodes-<%- name %> -rpcpassword=password
+
+set -x
+
+<% if (name === 'zcash') { -%>
+docker run --rm --name $node_name --entrypoint /bin/bash -ti sideshift/nodes-<%- name %> -c 'zcashd --version'
+<% } else { -%>
+docker run -d --rm --name $node_name -ti sideshift/nodes-<%- name %> -rpcpassword=password
 
 until docker exec -ti $node_name <%- cliFilename %> -rpcpassword=password <%- healthRpcMethod %>; do
   sleep 1
 done
 
 docker stop $node_name
+<% } -%>

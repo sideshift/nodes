@@ -1,0 +1,5 @@
+{
+  "name": "lnd-bitcoin",
+  "rpcPort": 9835,
+  "p2pPort": 9735
+}

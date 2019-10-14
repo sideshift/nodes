@@ -1,0 +1,5 @@
+{
+  "name": "monero",
+  "nodeVersion": "0.14.1.2",
+  "rpcPort": 28081
+}

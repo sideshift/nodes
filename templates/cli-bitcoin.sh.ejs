@@ -1,0 +1,9 @@
+<%
+  const binaryPrefix = locals.binaryPrefix || nodePrefix
+  const cliFilename = locals.cliFilename || `${binaryPrefix}-cli`;
+  const healthRpcMethod = locals.healthRpcMethod || 'getblockchaininfo';
+-%>
+#!/usr/bin/env bash
+set -e; cd "$(dirname "$0")"
+
+docker exec -ti <%- name %> <%- cliFilename %> -datadir=/data $*

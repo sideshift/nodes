@@ -1,0 +1,30 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+  const dockerRunArgs = [
+    `-v /opt/ebs/${name}:/root/.lightning`,
+    `-v /opt/ebs/bitcoin:/etc/bitcoin`,
+    `-e EXPOSE_TCP=true`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `--link bitcoin:bitcoind`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+Requires=<%- backendService %>.service
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart=/usr/bin/docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %> --configfile=/data/lnd.conf
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

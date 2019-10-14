@@ -1,0 +1,10 @@
+{
+  "name": "lnd-bitcoin",
+  "nodeVersion": "0.8.0-beta-rc2",
+  "nodeUrl": "https://github.com/lightningnetwork/lnd/releases/download/v$NODE_VERSION/lnd-linux-amd64-v$NODE_VERSION.tar.gz",
+  "backend": "bitcoind",
+  "backendService": "bitcoin",
+  "backendRpcPort": 8332,
+  "rpcPort": 8079,
+  "p2pPort": 9735
+}

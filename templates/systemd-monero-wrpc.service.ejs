@@ -1,0 +1,33 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+  const dockerRunArgs = [
+    `-v /opt/ebs/monero/wallets:/monero`,
+    `-e RPC_BIND_IP=0.0.0.0`,
+    `-e RPC_BIND_PORT=${rpcPort}`,
+    `-e LOG_LEVEL=3`,
+    `-e DAEMON_HOST=monero`,
+    `-e DAEMON_PORT=28081`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `--link monero:monero`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+Requires=monero.service
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart=/usr/bin/docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %> monero-wallet-rpc --wallet-file wallet --password-file wallet.passwd --disable-rpc-login
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

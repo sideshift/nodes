@@ -1,0 +1,29 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+
+  const dockerRunArgs = [
+    `-e PROXY_PASSWORD`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    // `-e NODE_TLS_REJECT_UNAUTHORIZED=0`,
+    `--link lnd-bitcoin:lnd-bitcoin`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+Requires=lnd-bitcoin.service
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart= /bin/bash -c 'export PROXY_PASSWORD=`cat /opt/ebs/lnd-bitcoin/proxy-password`; docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %> --target=https://lnd-bitcoin:8079 --username=user --password=$PROXY_PASSWORD --listenPort=<%- rpcPort %> --insecure'
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
