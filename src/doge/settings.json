@@ -1,6 +1,6 @@
 {
   "name": "doge",
-  "nodeVersion": "1.14.0",
+  "nodeVersion": "1.14.2",
   "nodePrefix": "dogecoin",
   "nodeUrl": "https://github.com/dogecoin/dogecoin/releases/download/v$NODE_VERSION/dogecoin-$NODE_VERSION-x86_64-linux-gnu.tar.gz",
   "rpcPort": 22555,
