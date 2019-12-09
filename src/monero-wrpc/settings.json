@@ -1,5 +1,5 @@
 {
   "name": "monero-wrpc",
-  "nodeVersion": "0.14.1.2",
+  "nodeVersion": "0.15.0.1",
   "rpcPort": 28083
 }
