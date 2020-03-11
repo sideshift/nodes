@@ -1,0 +1,28 @@
+<%
+  const rpcPortHost = locals.rpcPortHost || rpcPort;
+  const walletPortHost = locals.walletPortHost || walletPort;
+
+  const dockerRunArgs = [
+    `-v /opt/ebs/${name}:/root/.hsd`,
+    `-p ${rpcPortHost}:${rpcPort}`,
+    `-p ${walletPortHost}:${walletPort}`,
+    `--name ${name}`,
+    '--rm',
+    '-t',
+    ...(locals.dockerRunExtraArgs || []),
+  ].join(' ');
+-%>
+[Unit]
+Description=<%- _.upperFirst(name) %>
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStartPre=-/usr/bin/docker stop <%- name %>
+ExecStartPre=-/usr/bin/docker rm <%- name %>
+ExecStart=/usr/bin/docker run <%- dockerRunArgs %> sideshift/nodes-<%- name %>
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

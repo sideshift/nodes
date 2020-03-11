@@ -4,7 +4,7 @@ set -o pipefail
 
 target_node="${TARGET_NODE:-all}"
 
-for name in zcash groestl doge bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash liquid monero monero-wrpc monero-wrpc-proxy lnd-bitcoin lnd-bitcoin-proxy; do
+for name in zcash groestl doge bitcoin-sv peercoin bitcoin-abc via bitcoin litecoin omni dash liquid monero monero-wrpc monero-wrpc-proxy lnd-bitcoin lnd-bitcoin-proxy hsd; do
   if [[ "$target_node" != "all" && "$target_node" != "$name" ]]; then
     continue
   fi
@@ -30,6 +30,9 @@ for name in zcash groestl doge bitcoin-sv peercoin bitcoin-abc via bitcoin litec
   elif [[ "$name" = "c-lightning-bitcoin" ]]; then
     ./scripts/compile-ejs.sh Dockerfile-c-lightning $name/settings > dist/$name/Dockerfile
     ./scripts/compile-ejs.sh systemd-c-lightning.service $name/settings > dist/$name/$name.service
+  elif [[ "$name" = "hsd" ]]; then
+    ./scripts/compile-ejs.sh Dockerfile-hsd $name/settings > dist/$name/Dockerfile
+    ./scripts/compile-ejs.sh systemd-hsd.service $name/settings > dist/$name/$name.service
   else
     ./scripts/compile-ejs.sh Dockerfile-bitcoin $name/settings > dist/$name/Dockerfile
     ./scripts/compile-ejs.sh systemd-bitcoin.service $name/settings > dist/$name/$name.service

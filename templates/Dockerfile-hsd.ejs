@@ -1,0 +1,24 @@
+FROM node:alpine AS base
+
+ENV NODE_VERSION <%- locals.nodeVersion %>
+ENV NODE_URL <%- locals.nodeUrl %>
+
+# System deps
+RUN apk add --no-cache g++ gcc make python2
+
+# hsd
+RUN set -ex \
+  && wget -qO hsd.tar.gz $NODE_URL \
+  && tar -xzf *.tar.gz \
+  && rm hsd.tar.gz \
+  && mv hsd-* hsd
+
+WORKDIR /hsd
+
+# hsd deps
+RUN npm install --production
+
+ENV PATH="${PATH}:/hsd/bin:/hsd/node_modules/.bin"
+
+VOLUME /root/.hsd
+ENTRYPOINT /hsd/bin/hsd

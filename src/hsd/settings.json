@@ -1,0 +1,8 @@
+{
+  "name": "hsd",
+  "nodeVersion": "2.1.1",
+  "nodeUrl": "https://github.com/handshake-org/hsd/archive/v$NODE_VERSION.tar.gz",
+  "rpcPort": 12037,
+  "p2pPort": 12038,
+  "walletPort": 12039
+}
