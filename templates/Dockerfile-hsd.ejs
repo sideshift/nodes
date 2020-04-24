@@ -18,6 +18,9 @@ WORKDIR /hsd
 # hsd deps
 RUN npm install --production
 
+# cli
+RUN npm install hs-client
+
 ENV PATH="${PATH}:/hsd/bin:/hsd/node_modules/.bin"
 
 VOLUME /root/.hsd
