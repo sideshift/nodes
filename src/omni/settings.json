@@ -1,6 +1,6 @@
 {
   "name": "omni",
-  "nodeVersion": "0.7.0",
+  "nodeVersion": "0.8.1",
   "nodePrefix": "omnicore",
   "nodeUrl": "https://github.com/OmniLayer/omnicore/releases/download/v$NODE_VERSION/$NODE_FILENAME",
   "daemonExtraArgs": ["-txindex"],
