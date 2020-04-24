@@ -6,7 +6,7 @@
   "daemonExtraArgs": ["-txindex"],
   "rpcPort": 8332,
   "p2pPort": 8333,
-  "testnetRpcPort":  18332,
+  "testnetRpcPort": 18332,
   "testnetP2pPort": 18333,
   "rpcPortHost": 8334
 }
