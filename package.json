@@ -21,6 +21,6 @@
   "homepage": "https://github.com/sideshift/nodes#readme",
   "devDependencies": {
     "ejs": "2.6.2",
-    "lodash": "4.17.15"
+    "lodash": "4.17.19"
   }
 }
